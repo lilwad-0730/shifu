@@ -1,0 +1,6 @@
+{
+  "name": "wenxin-compass",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node test.mjs" }
+}

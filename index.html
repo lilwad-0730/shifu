@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#173f37">
+  <meta name="description" content="問心羅盤，以哲學觀點陪你看清人生課題，所有內容只留在你的裝置。">
+  <title>問心羅盤｜看清一點，再走一步</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <header class="site-header">
+    <button class="brand" data-view="home" aria-label="回到首頁">
+      <span class="brand-mark" aria-hidden="true">問</span>
+      <span><strong>問心羅盤</strong><small>看清一點，再走一步</small></span>
+    </button>
+    <nav aria-label="主要選單">
+      <button class="nav-link is-active" data-view="home">開始探索</button>
+      <button class="nav-link" data-view="journal">我的課題 <span id="card-count" class="count">0</span></button>
+    </nav>
+    <button class="help-button" data-dialog="help-dialog">需要幫助</button>
+  </header>
+
+  <main id="main">
+    <section id="home-view" class="view home-view">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">私人・免費・不需 AI</p>
+          <h1>有些答案，<br><em>不是找到的，</em><br>是慢慢看見的。</h1>
+          <p class="lead">選一個此刻困住你的課題。問心羅盤會用一段哲學觀點、一個深入問題，陪你整理成可以帶走的一小步。</p>
+          <button class="primary-button" id="hero-start">開始一次探索 <span aria-hidden="true">→</span></button>
+          <button class="text-button" data-dialog="privacy-dialog">你的文字如何保存？</button>
+        </div>
+        <div class="compass-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="compass-face"><span>問</span><i></i></div>
+          <p>不替你決定<br>陪你辨認方向</p>
+        </div>
+      </div>
+
+      <div class="topic-intro" id="topics">
+        <p class="eyebrow">今日想整理什麼？</p>
+        <h2>從一個課題開始</h2>
+      </div>
+      <div class="topic-grid" id="topic-grid"></div>
+
+      <aside class="promise">
+        <span class="promise-icon" aria-hidden="true">◇</span>
+        <div><strong>所有輸入只留在這台裝置</strong><p>網站沒有生成式 AI、帳號、後端或追蹤程式，也不會把你的文字傳出去。</p></div>
+        <button class="text-button" data-dialog="privacy-dialog">了解更多</button>
+      </aside>
+    </section>
+
+    <section id="explore-view" class="view explore-view" hidden>
+      <div class="explore-head">
+        <button class="back-home" data-view="home">← 回到首頁</button>
+        <div class="progress-wrap">
+          <span id="progress-label">第 1 步，共 5 步</span>
+          <div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
+        </div>
+      </div>
+
+      <form id="reflection-form" novalidate>
+        <fieldset class="step" data-step="0">
+          <legend><span class="step-kicker">先選一扇門</span>此刻，哪個課題最靠近你？</legend>
+          <p class="step-note">沒有完美分類，選最接近的就好。</p>
+          <div class="choice-grid" id="form-topics"></div>
+          <div class="step-actions"><button type="button" class="primary-button next">下一步</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="1" hidden>
+          <legend><span class="step-kicker">感受與處境</span>先讓此刻有一個名字</legend>
+          <label class="field-label">現在最明顯的感受是？</label>
+          <div class="pill-grid" id="feelings-list"></div>
+          <label class="field-label" for="situation">用自己的話，記下發生了什麼</label>
+          <textarea id="situation" maxlength="800" rows="5" placeholder="這段文字只留在你的裝置，也可以只寫幾個字。"></textarea>
+          <div class="char-count"><span id="situation-count">0</span>/800</div>
+          <div class="step-actions"><button type="button" class="secondary-button prev">上一步</button><button type="button" class="primary-button next">下一步</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="2" hidden>
+          <legend><span class="step-kicker">內在方向</span>這件事裡，你最想守住什麼？</legend>
+          <p class="step-note">最多選兩項。價值沒有高低，只是在提醒你往哪裡看。</p>
+          <div class="pill-grid value-grid" id="values-list"></div>
+          <div class="step-actions"><button type="button" class="secondary-button prev">上一步</button><button type="button" class="primary-button next">看看一個觀點</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="3" hidden>
+          <legend><span class="step-kicker">一個觀點</span>換個角度，看同一件事</legend>
+          <article class="wisdom-card" id="wisdom-card"></article>
+          <label class="field-label deep-label" for="deep-answer" id="deep-question"></label>
+          <textarea id="deep-answer" maxlength="800" rows="5" placeholder="不必寫得完整，只需對自己誠實。"></textarea>
+          <div class="char-count"><span id="answer-count">0</span>/800</div>
+          <div class="step-actions"><button type="button" class="secondary-button prev">上一步</button><button type="button" class="primary-button next">帶走一小步</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="4" hidden>
+          <legend><span class="step-kicker">回到生活</span>選一個現在做得到的小行動</legend>
+          <p class="step-note">也可以選擇暫時不行動。理解自己，本身就有價值。</p>
+          <div class="action-list" id="action-list"></div>
+          <label class="custom-action"><span>或寫下自己的行動</span><input id="custom-action" maxlength="120" placeholder="例如：明天下午先查一項資料"></label>
+          <div class="step-actions"><button type="button" class="secondary-button prev">上一步</button><button type="button" class="primary-button" id="finish-button">整理我的課題</button></div>
+        </fieldset>
+      </form>
+
+      <section id="result-panel" class="result-panel" hidden aria-labelledby="result-title">
+        <div class="result-heading"><div><p class="eyebrow">本次課題卡</p><h2 id="result-title">你已經看見了一點方向</h2></div><span class="seal" aria-hidden="true">心</span></div>
+        <p class="result-note">先讀讀看。這是你的理解，你可以修改任何文字，再決定是否保存。</p>
+        <div class="result-grid">
+          <label><span>我的處境</span><textarea id="result-situation" rows="3"></textarea></label>
+          <label><span>我看見的事</span><textarea id="result-insight" rows="3"></textarea></label>
+          <label><span>我想帶走的一小步</span><textarea id="result-action" rows="2"></textarea></label>
+        </div>
+        <div class="book-section"><div><p class="eyebrow">沿著這條路再讀一點</p><h3>相關書籍</h3></div><div class="book-grid" id="book-list"></div></div>
+        <div class="save-note"><span aria-hidden="true">▣</span><p><strong>保存前提醒</strong> 課題卡只會存進這個瀏覽器。共用裝置上的其他人可能看見，清除瀏覽資料也可能使它消失。</p></div>
+        <div class="result-actions"><button class="secondary-button" id="restart-button">重新探索</button><button class="primary-button" id="save-button">保存到我的課題</button></div>
+      </section>
+    </section>
+
+    <section id="journal-view" class="view journal-view" hidden>
+      <div class="page-heading"><div><p class="eyebrow">只屬於你的紀錄</p><h1>我的課題</h1><p>回來看看當時的自己，不評分，也不催促。</p></div><button class="primary-button" id="new-reflection">開始新探索</button></div>
+      <div class="journal-toolbar"><span id="journal-summary">尚未保存課題</span><div><button class="text-button" id="export-button">匯出 JSON</button><button class="text-button danger" id="clear-button">清除全部</button></div></div>
+      <div id="cards-list" class="cards-list"></div>
+      <div id="empty-journal" class="empty-state"><span aria-hidden="true">○</span><h2>還沒有課題卡</h2><p>完成一次探索後，你可以選擇把理解留在這裡。</p><button class="secondary-button" id="empty-start">開始探索</button></div>
+    </section>
+  </main>
+
+  <footer><p>問心羅盤是自我探索工具，不會分析、診斷或監看你的文字。</p><button class="text-button" data-dialog="help-dialog">心理困擾與緊急求助</button></footer>
+
+  <dialog id="help-dialog">
+    <div class="dialog-inner"><button class="dialog-close" aria-label="關閉">×</button><p class="eyebrow">你不必獨自承受</p><h2>需要真人協助時</h2><p>問心羅盤不會監看內容，也無法在危機時主動聯絡任何人。如果你或身邊的人可能立即受傷，請直接聯絡：</p><div class="help-numbers"><a href="tel:119"><strong>119</strong><span>緊急救護</span></a><a href="tel:110"><strong>110</strong><span>警察協助</span></a><a href="tel:1925"><strong>1925</strong><span>安心專線・24 小時</span></a></div><p class="fine-print">1925 為台灣衛生福利部安心專線。若不在台灣，請聯絡所在地的緊急服務或可信任的人。</p></div>
+  </dialog>
+
+  <dialog id="privacy-dialog">
+    <div class="dialog-inner"><button class="dialog-close" aria-label="關閉">×</button><p class="eyebrow">資料與能力界線</p><h2>你的文字留在這台裝置</h2><ul class="plain-list"><li>沒有生成式 AI、API Key、帳號或後端。</li><li>探索中的文字只存在目前頁面，除非你主動保存課題卡。</li><li>保存的課題卡放在這個瀏覽器，可隨時匯出或刪除。</li><li>共用裝置上的其他人可能看見；清除瀏覽資料可能讓紀錄消失。</li><li>本工具不會理解、診斷或監看你輸入的自由文字。</li></ul></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
